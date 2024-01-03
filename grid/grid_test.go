@@ -31,6 +31,22 @@ func TestPlaceShip(t *testing.T) {
 	}
 }
 
+func TestReportsShipHit(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+	grid.PlaceShip(1, 2)
+
+	// Act
+	got := grid.TakeShot(1, 2)
+
+	// Arrange
+	want := HIT
+
+	if got != want {
+		t.Errorf("Did not report hit. got %v, want %v", got, want)
+	}
+}
+
 func isGridEmpty(g *Grid) bool {
 	for _, row := range g.positions {
 		for _, position := range row {
