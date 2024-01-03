@@ -82,6 +82,18 @@ func TestReportsMissForShotAtAlreadySunkShip(t *testing.T) {
 	}
 }
 
+func TestPlacesShipTopLeft(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+
+	// Act
+	err := grid.PlaceShip(0, 0)
+
+	if err != nil {
+		t.Error("Failed to place")
+	}
+}
+
 func isGridEmpty(g *Grid) bool {
 	for _, row := range g.positions {
 		for _, position := range row {
