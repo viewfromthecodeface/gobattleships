@@ -62,7 +62,7 @@ func TestReportsMiss(t *testing.T) {
 	}
 }
 
-func TestRecordsShipIsSunk(t *testing.T) {
+func TestReportsMissForShotAtAlreadySunkShip(t *testing.T) {
 	// Arrange - place then sink one ship
 	grid := NewGrid()
 	
