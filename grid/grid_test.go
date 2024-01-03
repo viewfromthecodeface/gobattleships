@@ -99,7 +99,7 @@ func TestPlacesShipTopRight(t *testing.T) {
 	grid := NewGrid()
 
 	// Act
-	err := grid.PlaceShip(0, 6)
+	err := grid.PlaceShip(6, 0)
 
 	if err != nil {
 		t.Error()
