@@ -47,6 +47,21 @@ func TestReportsShipHit(t *testing.T) {
 	}
 }
 
+func TestReportsMiss(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+
+	// Act 
+	got := grid.TakeShot(0, 0)
+
+	// Arrange
+	want := MISS
+
+	if got != want {
+		t.Errorf("Did not report miss. got %v, want %v", got, want)
+	}
+}
+
 func isGridEmpty(g *Grid) bool {
 	for _, row := range g.positions {
 		for _, position := range row {

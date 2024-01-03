@@ -32,5 +32,5 @@ func (g *Grid) TakeShot( row int, col int ) ShotResult {
 		return HIT
 	}
 
-	panic ("not implemented")
+	return MISS
 }
