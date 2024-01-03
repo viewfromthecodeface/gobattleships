@@ -39,12 +39,12 @@ func (g Grid) reachedMaximumShips() bool {
 	return total == MAXIMUM_NUMBER_OF_SHIPS
 }
 
-func isOutOfBounds( row int ) bool {
-	return row < 0 || row > 6
+func isOutOfBounds( row int, col int ) bool {
+	return row < 0 || row > 6 || col < 0
 }
 
 func (g *Grid) PlaceShip( row int, col int ) error {
-	if isOutOfBounds(row) {
+	if isOutOfBounds(row, col) {
 		return errors.New("ship out of bounds")
 	}
 		
