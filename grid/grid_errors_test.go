@@ -104,7 +104,7 @@ func TestOutOfBoundsShipsNotPlacedOnGrid(t *testing.T) {
 	grid.PlaceShip(0, 7)
 
 	// Assert
-	if !isGridEmpty(grid) {
+	if !grid.HasNoShips(){
 		t.Error()
 	}
 

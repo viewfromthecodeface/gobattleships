@@ -12,7 +12,7 @@ func TestCreatesEmptyGrid(t *testing.T){
 	grid := NewGrid()
 
 	// Assert
-	got := isGridEmpty(grid)
+	got := grid.HasNoShips()
 	want := true
 
 	if got != want {
@@ -130,14 +130,25 @@ func TestPlacesShipBottomRight(t *testing.T) {
 	}
 }
 
-func isGridEmpty(g *Grid) bool {
-	for _, row := range g.positions {
-		for _, position := range row {
-			if position != emptySpace {
-				return false
-			}
-		}
-	}
+func TestReportsNoShipsOnGrid(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
 
-	return true
+	grid.PlaceShip(1, 2)
+	grid.PlaceShip(3, 3)
+	grid.PlaceShip(6, 6)
+
+	grid.TakeShot(1, 2)
+	grid.TakeShot(3, 3)
+	grid.TakeShot(6, 6)
+
+	// Act
+	got := grid.HasNoShips()
+
+	// Assert
+	want := true
+
+	if got != want {
+		t.Error()
+	} 
 }

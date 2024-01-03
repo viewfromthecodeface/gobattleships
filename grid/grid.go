@@ -76,3 +76,15 @@ func (g *Grid) TakeShot( row int, col int ) ShotResult {
 
 	return MISS
 }
+
+func (g Grid) HasNoShips() bool {
+	for _, row := range g.positions {
+		for _, position := range row {
+			if position != emptySpace {
+				return false
+			}
+		}
+	}
+
+	return true
+}
