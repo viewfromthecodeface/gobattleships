@@ -106,6 +106,18 @@ func TestPlacesShipTopRight(t *testing.T) {
 	}
 }
 
+func TestPlacesShipBottomLeft(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+
+	// Act
+	err := grid.PlaceShip(0, 6)
+
+	if err != nil {
+		t.Error()
+	}
+}
+
 func isGridEmpty(g *Grid) bool {
 	for _, row := range g.positions {
 		for _, position := range row {
