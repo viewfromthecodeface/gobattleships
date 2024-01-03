@@ -40,7 +40,7 @@ func (g Grid) reachedMaximumShips() bool {
 }
 
 func isOutOfBounds( row int, col int ) bool {
-	return row < 0 || row > 6 || col < 0
+	return row < 0 || row > 6 || col < 0 || col > 6
 }
 
 func (g *Grid) PlaceShip( row int, col int ) error {

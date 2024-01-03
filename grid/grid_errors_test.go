@@ -81,6 +81,16 @@ func TestReportsErrorPlacingShipOutsideTop(t *testing.T) {
 	// Assert
 	assertErrorText(t, got, "ship out of bounds")
 }
+func TestReportsErrorPlacingShipOutsideBottom(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+
+	// Act
+	got := grid.PlaceShip(0, 7)
+
+	// Assert
+	assertErrorText(t, got, "ship out of bounds")
+}
 
 func assertErrorText(t *testing.T, got error, wantedText string) {
 	want := errors.New(wantedText)
