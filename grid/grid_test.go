@@ -62,6 +62,23 @@ func TestReportsMiss(t *testing.T) {
 	}
 }
 
+func TestRecordsShipIsSunk(t *testing.T) {
+	// Arrange - place then sink one ship
+	grid := NewGrid()
+	
+	grid.PlaceShip(1, 2)
+	grid.TakeShot(1, 2)	// sink ship
+
+	// Act 
+	got := grid.TakeShot(1, 2)
+
+	// Arrange
+	want := MISS
+
+	if got != want {
+		t.Errorf("Did not report miss. got %v, want %v", got, want)
+	}
+}
 func isGridEmpty(g *Grid) bool {
 	for _, row := range g.positions {
 		for _, position := range row {
