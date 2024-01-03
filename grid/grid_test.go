@@ -90,7 +90,19 @@ func TestPlacesShipTopLeft(t *testing.T) {
 	err := grid.PlaceShip(0, 0)
 
 	if err != nil {
-		t.Error("Failed to place")
+		t.Error()
+	}
+}
+
+func TestPlacesShipTopRight(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+
+	// Act
+	err := grid.PlaceShip(0, 6)
+
+	if err != nil {
+		t.Error()
 	}
 }
 
