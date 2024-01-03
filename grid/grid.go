@@ -1,5 +1,7 @@
 package grid
 
+import "errors"
+
 type Grid struct {
 	positions [7][7]string
 }
@@ -19,8 +21,13 @@ func NewGrid() *Grid {
 	return &Grid{}
 }
 
-func (g *Grid) PlaceShip( row int, col int ) {
+func (g *Grid) PlaceShip( row int, col int ) error {
+	if g.isShipAt(row, col) {
+		return errors.New("ship already at location")
+	}
+	
 	g.positions[row][col] = shipToken
+	return nil
 }
 
 func (g Grid) isShipAt( row int, col int ) bool {

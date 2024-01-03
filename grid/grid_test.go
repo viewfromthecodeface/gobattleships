@@ -1,6 +1,9 @@
 package grid
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 func TestCreatesEmptyGrid(t *testing.T){
 	// Arrange
@@ -77,6 +80,23 @@ func TestReportsMissForShotAtAlreadySunkShip(t *testing.T) {
 
 	if got != want {
 		t.Errorf("Did not report miss. got %v, want %v", got, want)
+	}
+}
+
+func TestCannotPlaceShipOnTopOfAnother(t *testing.T) {
+	// Arrange - place 9 ships
+	grid := NewGrid()
+	
+	grid.PlaceShip(1, 2)
+
+	// Act 
+	got := grid.PlaceShip(1, 2)
+
+	// Arrange
+	want := errors.New("ship already at location")
+
+	if got.Error() != want.Error() {
+		t.Errorf("got %v, want %v", got, want)
 	}
 }
 
