@@ -49,3 +49,18 @@ func TestReportsErrorTooManyShipsPlaced(t *testing.T) {
 	}
 }
 
+func TestReportsErrorPlacingShipOutsideLeft(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+
+	// Act
+	got := grid.PlaceShip(-1, 0)
+
+	// Assert
+	want := errors.New("ship out of bounds")
+
+	if got.Error() != want.Error() {
+		t.Errorf("got %v, want %v", got, want)
+	}
+}
+

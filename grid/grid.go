@@ -40,7 +40,10 @@ func (g Grid) reachedMaximumShips() bool {
 }
 
 func (g *Grid) PlaceShip( row int, col int ) error {
-	if g.isShipAt(row, col) {
+	if row < 0 {
+		return errors.New("ship out of bounds")
+	}
+		if g.isShipAt(row, col) {
 		return errors.New("ship already at location")
 	}
 
