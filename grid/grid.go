@@ -17,15 +17,37 @@ const (
 	HIT
 )
 
+const (
+	MAXIMUM_NUMBER_OF_SHIPS int = 9
+)
+
 func NewGrid() *Grid {
 	return &Grid{}
+}
+
+func (g Grid) reachedMaximumShips() bool { 
+	total := 0
+
+	for _, row := range g.positions {
+		for _, position := range row {
+			if position == shipToken {
+				total++
+			}
+		}
+	}
+
+	return total == MAXIMUM_NUMBER_OF_SHIPS
 }
 
 func (g *Grid) PlaceShip( row int, col int ) error {
 	if g.isShipAt(row, col) {
 		return errors.New("ship already at location")
 	}
-	
+
+	if g.reachedMaximumShips() {
+		return errors.New("cannot place ship - limit reached")
+	}
+
 	g.positions[row][col] = shipToken
 	return nil
 }
