@@ -93,6 +93,23 @@ func TestReportsErrorPlacingShipOutsideBottom(t *testing.T) {
 	assertErrorText(t, got, "ship out of bounds")
 }
 
+func TestOutOfBoundsShipsNotPlacedOnGrid(t *testing.T) {
+	// Arrange
+	grid := NewGrid()
+
+	// Act - attempt to place outside grid at four corners
+	grid.PlaceShip(-1, 0)
+	grid.PlaceShip(7, 0)
+	grid.PlaceShip(0, -1)
+	grid.PlaceShip(0, 7)
+
+	// Assert
+	if !isGridEmpty(grid) {
+		t.Error()
+	}
+
+}
+
 func assertErrorText(t *testing.T, got error, wantedText string) {
 	want := errors.New(wantedText)
 
