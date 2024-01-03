@@ -5,7 +5,7 @@ type Grid struct {
 }
 
 const (
-	emptySpace = ""
+	emptySpace string = ""
 	shipToken string = "ship"
 )
 
