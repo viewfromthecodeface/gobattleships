@@ -79,6 +79,7 @@ func TestRecordsShipIsSunk(t *testing.T) {
 		t.Errorf("Did not report miss. got %v, want %v", got, want)
 	}
 }
+
 func isGridEmpty(g *Grid) bool {
 	for _, row := range g.positions {
 		for _, position := range row {

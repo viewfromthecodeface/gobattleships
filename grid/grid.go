@@ -32,7 +32,7 @@ func (g *Grid) sinkShip( row int, col int ) {
 }
 
 func (g *Grid) TakeShot( row int, col int ) ShotResult {
-	if g.positions[row][col] == shipToken {
+	if g.isShipAt(row, col) {
 		g.sinkShip(row, col)
 		return HIT
 	}
