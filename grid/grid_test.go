@@ -130,23 +130,17 @@ func TestPlacesShipBottomRight(t *testing.T) {
 	}
 }
 
-func TestReportsNoShipsOnGrid(t *testing.T) {
+func TestReportsShipsOnGrid(t *testing.T) {
 	// Arrange
 	grid := NewGrid()
 
 	grid.PlaceShip(1, 2)
-	grid.PlaceShip(3, 3)
-	grid.PlaceShip(6, 6)
-
-	grid.TakeShot(1, 2)
-	grid.TakeShot(3, 3)
-	grid.TakeShot(6, 6)
 
 	// Act
 	got := grid.HasNoShips()
 
 	// Assert
-	want := true
+	want := false
 
 	if got != want {
 		t.Error()
