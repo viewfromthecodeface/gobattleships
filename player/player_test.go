@@ -17,6 +17,19 @@ func TestReportsPlayerName(t *testing.T) {
 	}
 }
 
+func TestPlaceShipOnOwnGrid(t *testing.T) {
+	// Arrange
+	player := NewPlayer("One")
+	
+	// Act
+	err := player.PlaceShip(1, 2)
+
+	// Assert
+	if err != nil {
+		t.Errorf("error placing ship: %v", err)
+	}
+}
+
 /* 
   TODO next tests: 
   - Places ships on own grid (implies own grid)
