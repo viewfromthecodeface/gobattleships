@@ -93,3 +93,19 @@ func TestCreatesNamedPlayerOne(t *testing.T){
 		t.Errorf("wrong name got: %v, want %v", got, want)
 	}
 }
+
+func TestCreatesNamedPlayerTwo(t *testing.T){ 
+	// Arrange
+	game := game.New()
+	game.CreatePlayer1("one")
+
+	// Act
+	player2 := game.CreatePlayer2("two")
+	got := player2.GetName()
+
+	// Assert
+	want := "two"
+	if got != want {
+		t.Errorf("wrong name got: %v, want %v", got, want)
+	}
+}
