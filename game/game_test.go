@@ -2,6 +2,7 @@ package game_test
 
 import (
 	"battleships/game"
+	"battleships/player"
 	"testing"
 )
 
@@ -77,58 +78,18 @@ import (
 
 // }
 
-
-
-func TestCreatesNamedPlayerOne(t *testing.T){ 
-	// Arrange
-	game := game.New()
-	
-	// Act
-	player1 := game.CreatePlayer1("one")
-	got := player1.GetName()
-
-	// Assert
-	want := "one"
-	if got != want {
-		t.Errorf("wrong name got: %v, want %v", got, want)
-	}
-}
-
-func TestCreatesNamedPlayerTwo(t *testing.T){ 
-	// Arrange
-	game := game.New()
-	game.CreatePlayer1("one")
-
-	// Act
-	player2 := game.CreatePlayer2("two")
-	got := player2.GetName()
-
-	// Assert
-	want := "two"
-	if got != want {
-		t.Errorf("wrong name got: %v, want %v", got, want)
-	}
-}
-
 func TestPlayerOneActiveAtGameStart(t *testing.T) {
-	game := game.New()
-	player1 := game.CreatePlayer1("one")
+	// Arrange
+	player1 := player.New("one")
+	game := game.New(player1)
 
-	player1active := game.IsActive(player1)
-	
-	if !player1active {
-		t.Error("player 1 not active")
-	}
-}
+	// Act
+	got := game.GetActivePlayer()
 
-func TestPlayerTwoNotActiveAtGameStart(t *testing.T) {
-	game := game.New()
-	game.CreatePlayer1("one")
-	player2 := game.CreatePlayer2("two")
+	// Assert
+	want := player1
 
-	player2active := game.IsActive(player2)
-	
-	if player2active {
-		t.Error("player 2 should not be active")
+	if got != want {
+		t.Errorf("wrong active player got %v, want %v", got, want)
 	}
 }

@@ -4,7 +4,7 @@ import "testing"
 
 func TestReportsPlayerName(t *testing.T) {
 	// Arrange
-	player := NewPlayer("Action Dan")
+	player := New("Action Dan")
 
 	// Act
 	got := player.GetName()
@@ -19,7 +19,7 @@ func TestReportsPlayerName(t *testing.T) {
 
 func TestPlaceShipOnOwnGrid(t *testing.T) {
 	// Arrange
-	player := NewPlayer("One")
+	player := New("One")
 	
 	// Act
 	err := player.PlaceShip(1, 2)

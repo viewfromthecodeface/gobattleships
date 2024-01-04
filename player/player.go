@@ -1,13 +1,15 @@
 package player
 
-import "battleships/grid"
+import (
+	"battleships/grid"
+)
 
 type Player struct {
 	name string
 	grid grid.Grid
 }
 
-func NewPlayer( name string ) *Player {
+func New( name string ) *Player {
 	return &Player{	name: name,
 	 				grid: *grid.NewGrid()}
 }
