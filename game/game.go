@@ -7,6 +7,11 @@ type Game struct {
 	player2 *player.Player
 }
 
-func New(p1 *player.Player, p2 *player.Player) *Game {
-	return &Game{player1: p1, player2: p2}
+func New() *Game {
+	return &Game{}
+}
+
+func (g *Game) CreatePlayer1( name string ) *player.Player {
+	g.player1 = player.NewPlayer(name)
+	return g.player1
 }
