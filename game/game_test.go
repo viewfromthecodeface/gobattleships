@@ -110,7 +110,7 @@ func TestCreatesNamedPlayerTwo(t *testing.T){
 	}
 }
 
-func TestPlayer1ActiveAtGameStart(t *testing.T) {
+func TestPlayerOneActiveAtGameStart(t *testing.T) {
 	game := game.New()
 	player1 := game.CreatePlayer1("one")
 
@@ -118,5 +118,17 @@ func TestPlayer1ActiveAtGameStart(t *testing.T) {
 	
 	if !player1active {
 		t.Error("player 1 not active")
+	}
+}
+
+func TestPlayerTwoNotActiveAtGameStart(t *testing.T) {
+	game := game.New()
+	game.CreatePlayer1("one")
+	player2 := game.CreatePlayer2("two")
+
+	player2active := game.IsActive(player2)
+	
+	if player2active {
+		t.Error("player 2 should not be active")
 	}
 }
