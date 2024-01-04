@@ -29,10 +29,3 @@ func TestPlaceShipOnOwnGrid(t *testing.T) {
 		t.Errorf("error placing ship: %v", err)
 	}
 }
-
-/* 
-  TODO next tests: 
-  - Places ships on own grid (implies own grid)
-  - Take shot at opponent (implies link to opponent grid)
-  - PlayerHasWonWhenAllShipsSunk
-*/
