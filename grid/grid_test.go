@@ -133,7 +133,6 @@ func TestPlacesShipBottomRight(t *testing.T) {
 func TestReportsShipsOnGrid(t *testing.T) {
 	// Arrange
 	grid := NewGrid()
-
 	grid.PlaceShip(1, 2)
 
 	// Act

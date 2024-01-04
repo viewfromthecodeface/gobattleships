@@ -21,3 +21,7 @@ func (p Player) GetName() string {
 func (p *Player) PlaceShip( row int, col int ) error {
 	return p.grid.PlaceShip(row, col)
 }
+
+func (p *Player) TakeShot(row int, col int) grid.ShotResult {
+	return p.grid.TakeShot(row, col)
+}

@@ -2,6 +2,7 @@ package game_test
 
 import (
 	"battleships/game"
+	"battleships/grid"
 	"battleships/player"
 	"testing"
 )
@@ -78,18 +79,69 @@ import (
 
 // }
 
-func TestPlayerOneActiveAtGameStart(t *testing.T) {
+func TestReportsPlayer1SunkOpponentShip(t *testing.T) {
 	// Arrange
 	player1 := player.New("one")
-	game := game.New(player1)
+
+	player2 := player.New("two")
+	player2.PlaceShip(2, 3)
+	player2.PlaceShip(2, 4)
+
+	game := game.New(player1, player2)
 
 	// Act
-	got := game.GetActivePlayer()
+	got := game.FirePlayerOne(2, 3)
 
 	// Assert
-	want := player1
+	want := grid.HIT
 
 	if got != want {
-		t.Errorf("wrong active player got %v, want %v", got, want)
+		t.Errorf("ship not hit got %v, want %v", got, want)
+	}
+}
+
+func TestReportsPlayer1Miss(t *testing.T) {
+	// Arrange
+	player1 := player.New("one")
+
+	player2 := player.New("two")
+	player2.PlaceShip(2, 3)
+	player2.PlaceShip(2, 4)
+
+	game := game.New(player1, player2)
+
+	// Act
+	got := game.FirePlayerOne(0, 0) // empty location
+
+	// Assert
+	want := grid.MISS
+
+	if got != want {
+		t.Errorf("ship not missed got %v, want %v", got, want)
+	}
+}
+
+func TestReportsPlayer2SunkOpponentShip(t *testing.T) {
+	// Arrange
+	player1 := player.New("one")
+	player1.PlaceShip(1, 3)
+	player1.PlaceShip(1, 4)
+	
+	player2 := player.New("two")
+	player2.PlaceShip(2, 3)
+	player2.PlaceShip(2, 4)
+
+	game := game.New(player1, player2)
+
+	game.FirePlayerOne(2, 3)
+
+	// Act
+	got := game.FirePlayerTwo(1, 3)
+
+	// Assert
+	want := grid.HIT
+
+	if got != want {
+		t.Errorf("ship not hit got %v, want %v", got, want)
 	}
 }

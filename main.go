@@ -12,3 +12,6 @@ If the player misses a battleship then it is called a miss, and the turn passes 
 The player to first sink all their opponent's battleships is the winner
 */
 
+func main() {
+	// not implemented
+}
