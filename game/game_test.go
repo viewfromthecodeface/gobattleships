@@ -109,3 +109,14 @@ func TestCreatesNamedPlayerTwo(t *testing.T){
 		t.Errorf("wrong name got: %v, want %v", got, want)
 	}
 }
+
+func TestPlayer1ActiveAtGameStart(t *testing.T) {
+	game := game.New()
+	player1 := game.CreatePlayer1("one")
+
+	player1active := game.IsActive(player1)
+	
+	if !player1active {
+		t.Error("player 1 not active")
+	}
+}
