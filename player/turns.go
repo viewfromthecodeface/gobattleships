@@ -17,3 +17,7 @@ func (t *Turns) AddPlayer( player *Player ) {
 func (t Turns) ShootOpponent(row int, col int) grid.ShotResult {
 	return t.player2.IncomingShot(row, col)
 }
+
+func (t Turns) IsActivePlayer( player *Player) bool {
+	return t.player2 != player
+}

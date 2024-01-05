@@ -2,6 +2,7 @@ package player
 
 import (
 	"battleships/grid"
+	"errors"
 	"testing"
 )
 
@@ -45,7 +46,7 @@ func TestHitsOpponentShip(t *testing.T) {
 	opponent.PlaceShip(2, 3)
 
 	// Act
-	got := player1.Fire( 2, 3 )
+	got, _ := player1.Fire( 2, 3 )
 
 	// Assert
 	want := grid.HIT
@@ -64,11 +65,28 @@ func TestMissesOpponentShip(t *testing.T) {
 	opponent.PlaceShip(2, 3)
 
 	// Act
-	got := player1.Fire( 0, 0 )
+	got, _ := player1.Fire( 0, 0 )
 
 	// Assert
 	want := grid.MISS
 	if got != want {
 		t.Error("did not hit ship")
+	}
+}
+
+func TestPlayer2TurnBlocked(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	New(turns, "One")
+	player2 := New(turns, "Two")
+
+	// Act
+	_, got := player2.Fire( 0, 0 )
+
+	// Assert
+	want := errors.New("not your turn")
+	if got.Error() != want.Error() {
+		t.Errorf("incorrect error got %v, want %v", got, want)
 	}
 }
