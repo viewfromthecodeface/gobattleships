@@ -68,7 +68,7 @@ func (g *Grid) sinkShip( row int, col int ) {
 	g.positions[row][col] = emptySpace
 }
 
-func (g *Grid) TakeShot( row int, col int ) ShotResult {
+func (g *Grid) IncomingShot( row int, col int ) ShotResult {
 	if g.isShipAt(row, col) {
 		g.sinkShip(row, col)
 		return HIT

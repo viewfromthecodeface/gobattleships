@@ -39,7 +39,7 @@ func TestReportsShipHit(t *testing.T) {
 	grid.PlaceShip(1, 2)
 
 	// Act
-	got := grid.TakeShot(1, 2)
+	got := grid.IncomingShot(1, 2)
 
 	// Arrange
 	want := HIT
@@ -54,7 +54,7 @@ func TestReportsMiss(t *testing.T) {
 	grid := NewGrid()
 
 	// Act 
-	got := grid.TakeShot(0, 0)
+	got := grid.IncomingShot(0, 0)
 
 	// Arrange
 	want := MISS
@@ -69,10 +69,10 @@ func TestReportsMissForShotAtAlreadySunkShip(t *testing.T) {
 	grid := NewGrid()
 	
 	grid.PlaceShip(1, 2)
-	grid.TakeShot(1, 2)	// sink ship
+	grid.IncomingShot(1, 2)	// sink ship
 
 	// Act 
-	got := grid.TakeShot(1, 2)
+	got := grid.IncomingShot(1, 2)
 
 	// Arrange
 	want := MISS

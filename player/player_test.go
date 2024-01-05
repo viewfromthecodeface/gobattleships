@@ -1,10 +1,14 @@
 package player
 
-import "testing"
+import (
+	"battleships/grid"
+	"testing"
+)
 
 func TestReportsPlayerName(t *testing.T) {
 	// Arrange
-	player := New("Action Dan")
+	turns := NewTurns()
+	player := New(turns, "Action Dan")
 
 	// Act
 	got := player.GetName()
@@ -19,7 +23,8 @@ func TestReportsPlayerName(t *testing.T) {
 
 func TestPlaceShipOnOwnGrid(t *testing.T) {
 	// Arrange
-	player := New("One")
+	turns := NewTurns()
+	player := New(turns, "One")
 	
 	// Act
 	err := player.PlaceShip(1, 2)
@@ -27,5 +32,24 @@ func TestPlaceShipOnOwnGrid(t *testing.T) {
 	// Assert
 	if err != nil {
 		t.Errorf("error placing ship: %v", err)
+	}
+}
+
+func TestHitsOpponentShip(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	player1 := New(turns, "One")
+	
+	opponent := New(turns, "Opponent")
+	opponent.PlaceShip(2, 3)
+
+	// Act
+	got := player1.Fire( 2, 3 )
+
+	// Assert
+	want := grid.HIT
+	if got != want {
+		t.Error("did not hit ship")
 	}
 }
