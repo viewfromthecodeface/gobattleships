@@ -31,7 +31,11 @@ func (t *Turns) swapOpponent() {
 	if t.activePlayer == t.player1 {
 		t.activePlayer = t.player2
 		t.opponent = t.player1
-	}
+		return 
+	} 
+
+	t.activePlayer = t.player1
+	t.opponent = t.player2
 }
 
 func (t *Turns) updateTurn(err error) {
