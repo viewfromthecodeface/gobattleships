@@ -27,7 +27,7 @@ func (t *Turns) AddPlayer( player *Player ) {
 	t.opponent = t.player2
 }
 
-func (t *Turns) swapOpponent() {
+func (t *Turns) swapTurns() {
 	if t.activePlayer == t.player1 {
 		t.activePlayer = t.player2
 		t.opponent = t.player1
@@ -39,8 +39,10 @@ func (t *Turns) swapOpponent() {
 }
 
 func (t *Turns) updateTurn(err error) {
-	if err == nil {
-		t.swapOpponent()
+	wasValidShot := err == nil
+
+	if wasValidShot {
+		t.swapTurns()
 	}
 }
 
