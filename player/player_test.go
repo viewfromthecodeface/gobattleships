@@ -141,3 +141,9 @@ func TestPlayer1StaysActiveAfterInvalidShot(t *testing.T) {
 		t.Error("Unexpected error - player 1 should stay active after invalid shot")
 	}
 }
+
+// TODO
+// player 1 blocked during player 2 turn
+// player 2 stays active after invalid shot
+// player wins
+// game over
