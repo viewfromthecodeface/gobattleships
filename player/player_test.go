@@ -53,3 +53,22 @@ func TestHitsOpponentShip(t *testing.T) {
 		t.Error("did not hit ship")
 	}
 }
+
+func TestMissesOpponentShip(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	player1 := New(turns, "One")
+	
+	opponent := New(turns, "Opponent")
+	opponent.PlaceShip(2, 3)
+
+	// Act
+	got := player1.Fire( 0, 0 )
+
+	// Assert
+	want := grid.MISS
+	if got != want {
+		t.Error("did not hit ship")
+	}
+}
