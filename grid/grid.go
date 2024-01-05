@@ -68,13 +68,13 @@ func (g *Grid) sinkShip( row int, col int ) {
 	g.positions[row][col] = emptySpace
 }
 
-func (g *Grid) IncomingShot( row int, col int ) ShotResult {
+func (g *Grid) IncomingShot( row int, col int ) (ShotResult, error) {
 	if g.isShipAt(row, col) {
 		g.sinkShip(row, col)
-		return HIT
+		return HIT, nil
 	}
 
-	return MISS
+	return MISS, nil
 }
 
 func (g Grid) HasNoShips() bool {

@@ -90,3 +90,21 @@ func TestPlayer2TurnBlocked(t *testing.T) {
 		t.Errorf("incorrect error got %v, want %v", got, want)
 	}
 }
+
+func TestPlayer2GetsATurn(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	player1 := New(turns, "One")
+	player2 := New(turns, "Two")
+
+	player1.Fire(0, 0) // valid shot (miss) -> player 2 turn
+
+	// Act
+	_, err := player2.Fire(0, 0)
+
+	// Assert
+	if err != nil {
+		t.Error("Unexpected error - player 2 should be allowed to fire")
+	}
+}

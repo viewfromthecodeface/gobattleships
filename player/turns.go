@@ -3,7 +3,11 @@ package player
 import "battleships/grid"
 
 type Turns struct {
+	player1 *Player
 	player2 *Player
+
+	activePlayer *Player
+	opponent *Player
 }
 
 func NewTurns() *Turns {
@@ -11,13 +15,36 @@ func NewTurns() *Turns {
 }
 
 func (t *Turns) AddPlayer( player *Player ) {
+	if t.player1 == nil {
+		t.player1 = player
+		t.activePlayer = t.player1
+		return
+	}
+
 	t.player2 = player
+	t.opponent = t.player2
 }
 
-func (t Turns) ShootOpponent(row int, col int) grid.ShotResult {
-	return t.player2.IncomingShot(row, col)
+func (t *Turns) swapOpponent() {
+	if t.activePlayer == t.player1 {
+		t.activePlayer = t.player2
+		t.opponent = t.player1
+	}
 }
 
-func (t Turns) IsActivePlayer( player *Player) bool {
-	return t.player2 != player
+func (t *Turns) updateTurn(err error) {
+	// currently ignores error and always swicthes players
+	t.swapOpponent()
+}
+
+func (t *Turns) ShootOpponent(row int, col int) (grid.ShotResult, error) {
+	result, err := t.player2.IncomingShot(row, col)
+
+	t.updateTurn(err)
+
+	return result, err
+}
+
+func (t Turns) IsActivePlayer(player *Player) bool {
+	return t.activePlayer == player
 }

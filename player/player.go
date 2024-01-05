@@ -35,9 +35,9 @@ func (p *Player) Fire( row int, col int ) (grid.ShotResult, error) {
 		return grid.MISS, errors.New("not your turn")
 	}
 
-	return p.turns.ShootOpponent(row, col), nil
+	return p.turns.ShootOpponent(row, col)
 }
 
-func (p *Player) IncomingShot( row int, col int ) grid.ShotResult {
+func (p *Player) IncomingShot( row int, col int ) (grid.ShotResult, error) {
 	return p.grid.IncomingShot(row, col)
 }
