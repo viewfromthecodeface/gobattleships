@@ -108,3 +108,36 @@ func TestPlayer2GetsATurn(t *testing.T) {
 		t.Error("Unexpected error - player 2 should be allowed to fire")
 	}
 }
+
+func TestReportsInvalidShotPlayer1(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	player1 := New(turns, "One")
+	New(turns, "Two")
+
+	// Act
+	_, got := player1.Fire(-1, -1) // invalid shot -> player 1 stays
+
+	// Assert
+	want := errors.New("shot out of bounds")
+	if got.Error() != want.Error() {
+		t.Errorf("missing error got %v, want %v", got, want)
+	}
+}
+func TestPlayer1StaysActiveAfterInvalidShot(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	player1 := New(turns, "One")
+	New(turns, "Two")
+
+	// Act
+	player1.Fire(-1, -1) // invalid shot -> player 1 stays
+	_, err := player1.Fire(0, 0)
+
+	// Assert
+	if err != nil {
+		t.Error("Unexpected error - player 1 should stay active after invalid shot")
+	}
+}

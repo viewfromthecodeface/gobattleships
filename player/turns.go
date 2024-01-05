@@ -1,6 +1,8 @@
 package player
 
-import "battleships/grid"
+import (
+	"battleships/grid"
+)
 
 type Turns struct {
 	player1 *Player
@@ -33,12 +35,13 @@ func (t *Turns) swapOpponent() {
 }
 
 func (t *Turns) updateTurn(err error) {
-	// currently ignores error and always swicthes players
-	t.swapOpponent()
+	if err == nil {
+		t.swapOpponent()
+	}
 }
 
 func (t *Turns) ShootOpponent(row int, col int) (grid.ShotResult, error) {
-	result, err := t.player2.IncomingShot(row, col)
+	result, err := t.opponent.IncomingShot(row, col)
 
 	t.updateTurn(err)
 

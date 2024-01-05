@@ -69,6 +69,10 @@ func (g *Grid) sinkShip( row int, col int ) {
 }
 
 func (g *Grid) IncomingShot( row int, col int ) (ShotResult, error) {
+	if isOutOfBounds(row, col) {
+		return MISS, errors.New("shot out of bounds")
+	}
+
 	if g.isShipAt(row, col) {
 		g.sinkShip(row, col)
 		return HIT, nil
