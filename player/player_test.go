@@ -236,3 +236,32 @@ func TestRecordWinPlayer2(t *testing.T) {
 		t.Error("Expected game to be won")
 	}
 }
+
+
+func TestReportsErrorTooManyShipsPlaced(t *testing.T) {
+	// Arrange - place maximum limit of 9 ships
+	turns := NewTurns()
+	player := New(turns, "One")
+
+	player.PlaceShip(0, 0)
+	player.PlaceShip(0, 1)
+	player.PlaceShip(0, 2)
+
+	player.PlaceShip(1, 0)
+	player.PlaceShip(1, 1)
+	player.PlaceShip(1, 2)
+
+	player.PlaceShip(2, 0)
+	player.PlaceShip(2, 1)
+	player.PlaceShip(2, 2)
+
+	// Act
+	got := player.PlaceShip(3, 0)
+
+	// Assert
+	want := errors.New("cannot place ship - limit reached")
+
+	if got.Error() != want.Error() {
+		t.Errorf("got %v, want %v", got, want)
+	}
+}

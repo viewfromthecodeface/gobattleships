@@ -9,12 +9,19 @@ type Player struct {
 	name string
 	grid grid.Grid
 	turns *Turns
+	numberOfShips int
 }
+
+const (
+	MAXIMUM_NUMBER_OF_SHIPS int = 9
+)
+
 
 func New( turns *Turns, name string ) *Player {
 	player := &Player{	name: name,
 	 				grid: *grid.NewGrid(),
 					turns: turns,
+					numberOfShips: 0,
 				}
 	
 	turns.AddPlayer(player)
@@ -27,6 +34,12 @@ func (p Player) GetName() string {
 }
 
 func (p *Player) PlaceShip( row int, col int ) error {
+	if p.numberOfShips == MAXIMUM_NUMBER_OF_SHIPS {
+		return errors.New("cannot place ship - limit reached")
+	}
+
+	p.numberOfShips++
+
 	return p.grid.PlaceShip(row, col)
 }
 
