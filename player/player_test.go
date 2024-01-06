@@ -161,8 +161,24 @@ func TestPlayer1TurnFollowsPlayer2Turn(t *testing.T) {
 	}
 }
 
+func TestPlayer1BlockedDuringPlayer2Turn(t *testing.T) {
+	turns := NewTurns()
+
+	player1 := New(turns, "One")
+	New(turns, "Two")
+
+	player1.Fire(0, 0) // valid shot (miss) -> player 2 turn
+
+	// Act - Player 2 turn
+	_, err := player1.Fire(0, 0)
+
+	// Assert
+	if err == nil {
+		t.Error("Expected error - player 1 should be blocked during player 2 turn")
+	}
+}
+
 // TODO
-// player 1 blocked during player 2 turn
 // player 2 stays active after invalid shot
 // player wins
 // game over
