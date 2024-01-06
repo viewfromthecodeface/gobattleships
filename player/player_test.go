@@ -216,7 +216,23 @@ func TestRecordWinPlayer1(t *testing.T) {
 	}
 }
 
+func TestRecordWinPlayer2(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
 
-// TODO
-// player wins
-// game over
+	player1 := New(turns, "Loser")
+	player1.PlaceShip(0, 0)
+
+	player2 := New(turns, "Winner")
+
+	player1.Fire(6, 6) // miss -> player 2 turn
+	player2.Fire(0, 0) // winning shot
+
+	// Act
+	got := turns.IsGameWon()
+
+	// Assert
+	if got != true {
+		t.Error("Expected game to be won")
+	}
+}
