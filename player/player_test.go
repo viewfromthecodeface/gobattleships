@@ -196,6 +196,27 @@ func TestPlayer2StaysActiveAfterInvalidShot(t *testing.T) {
 		t.Error("Unexpected error - player 2 should stay active after invalid shot")
 	}
 }
+
+func TestRecordWinPlayer1(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	player1 := New(turns, "Winner")
+	player2 := New(turns, "Loser")
+	player2.PlaceShip(0, 0)
+
+	player1.Fire(0, 0) // winning shot
+
+	// Act
+	got := turns.IsGameWon()
+
+	// Assert
+	if got != true {
+		t.Error("Expected game to be won")
+	}
+}
+
+
 // TODO
 // player wins
 // game over

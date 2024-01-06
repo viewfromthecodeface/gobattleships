@@ -38,6 +38,18 @@ func (p *Player) Fire( row int, col int ) (grid.ShotResult, error) {
 	return p.turns.ShootOpponent(row, col)
 }
 
+func (p *Player) updateWinStatus( ) {
+	if p.grid.HasNoShips() {
+		p.turns.RecordWin()
+	}
+}
+
 func (p *Player) IncomingShot( row int, col int ) (grid.ShotResult, error) {
-	return p.grid.IncomingShot(row, col)
+	shotResult, err := p.grid.IncomingShot(row, col)
+
+	if shotResult == grid.HIT {
+		p.updateWinStatus()
+	}
+
+	return shotResult, err
 }

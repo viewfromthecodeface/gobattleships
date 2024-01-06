@@ -10,6 +10,8 @@ type Turns struct {
 
 	activePlayer *Player
 	opponent *Player
+
+	winner *Player
 }
 
 func NewTurns() *Turns {
@@ -56,4 +58,12 @@ func (t *Turns) ShootOpponent(row int, col int) (grid.ShotResult, error) {
 
 func (t Turns) IsActivePlayer(player *Player) bool {
 	return t.activePlayer == player
+}
+
+func (t Turns) IsGameWon() bool {
+	return t.winner != nil
+}
+
+func (t *Turns) RecordWin() {
+	t.winner = t.activePlayer
 }
