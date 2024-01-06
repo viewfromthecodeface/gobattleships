@@ -178,7 +178,24 @@ func TestPlayer1BlockedDuringPlayer2Turn(t *testing.T) {
 	}
 }
 
+func TestPlayer2StaysActiveAfterInvalidShot(t *testing.T) {
+	// Arrange
+	turns := NewTurns()
+
+	player1 := New(turns, "One")
+	player2 := New(turns, "Two")
+
+	player1.Fire(0, 0) // valid shot -> player 2 turn
+
+	// Act
+	player2.Fire(-1, -1) // Invalid shot -> player 2 turn still
+	_, err := player2.Fire(0, 0)
+
+	// Assert
+	if err != nil {
+		t.Error("Unexpected error - player 2 should stay active after invalid shot")
+	}
+}
 // TODO
-// player 2 stays active after invalid shot
 // player wins
 // game over
