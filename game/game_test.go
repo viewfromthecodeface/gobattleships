@@ -26,7 +26,7 @@ func (o *MockTextOutput) assertText(t *testing.T, want string) {
 	}
 }
 
-func TestPLayer1WinsRepresentativeGame(t *testing.T) {
+func TestStartGameDisplaysWelcomeMessage(t *testing.T) {
 	// Arrange
 	input := StubTextInput{}
 	output := &MockTextOutput{}
