@@ -64,15 +64,16 @@ func TestPlayer1WinsRepresentativeGame(t *testing.T) {
 		"99",
 
 		// Player 1 then Player 2 shots
-		"60", "00",
-		"61", "00",
-		"62", "00",
-		"63", "00",
-		"64", "00",
-		"65", "00",
-		"50", "00",
-		"51", "00",
-		"52", "00",
+		"00", "00", // miss miss
+		"60", "00", // hit miss
+		"61", "00", // hit miss
+		"62", "00", // hit miss
+		"63", "00", // hit miss
+		"64", "00", // hit miss
+		"65", "00", // hit miss
+		"50", "00", // hit miss
+		"51", "00", // hit miss
+		"52", "00", // winning-hit miss
 	}
 
 	input := &StubTextInput{ inputs: allInputBothPlayers }
@@ -109,6 +110,9 @@ func TestPlayer1WinsRepresentativeGame(t *testing.T) {
 		"Player 2 Place Ship 8",
 		"Player 2 Place Ship 9",
 		"",
+		"Let's Play!",
+		"Player 1 - enter position 00-66 of your shot",
+		"invalid position, try again",
 	}
 
 	output.assertAllText(t, want)

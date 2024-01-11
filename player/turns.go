@@ -67,3 +67,7 @@ func (t Turns) IsGameWon() bool {
 func (t *Turns) RecordWin() {
 	t.winner = t.activePlayer
 }
+
+func (t *Turns) GetActivePlayer() *Player {
+	return t.activePlayer
+}

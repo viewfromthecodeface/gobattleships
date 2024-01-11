@@ -25,15 +25,18 @@ func NewGame(userInput TextInput, output TextOutput) *Game {
 	return &Game{input: userInput, output: output}
 }
 
-func (g *Game)FetchShipPosition() (row int, col int) {
-	userCommand := g.input.Fetch()
-
+func toPosition(userCommand string) (row int, col int) {
 	decimalValue, _ := strconv.Atoi(userCommand)
 
 	row = decimalValue / 10
 	col = decimalValue % 10
 
 	return row, col
+}
+
+func (g *Game)FetchShipPosition() (row int, col int) {
+	userCommand := g.input.Fetch()
+	return toPosition(userCommand)
 }
 
 func (g *Game) placeShips(currentPlayer *player.Player) {
@@ -62,6 +65,22 @@ func (g *Game) askPlayersToPlaceShips() {
 	g.placeShips(g.player2)
 }
 
+func (g *Game) takeShot(turns *player.Turns) {
+	prompt := fmt.Sprintf("%s - enter position 00-66 of your shot", 
+							turns.GetActivePlayer().GetName())
+
+	g.output.Show(prompt)
+
+	positionText := g.input.Fetch()
+	row, col := toPosition(positionText)
+	_, err := turns.GetActivePlayer().Fire(row, col)
+
+	if err != nil {
+		g.output.Show("invalid position, try again")
+		return 
+	}
+}
+
 func (g *Game) Play() {
 	turns := player.NewTurns()
 	g.player1 = player.New(turns, "Player 1")
@@ -69,4 +88,7 @@ func (g *Game) Play() {
 
 	g.showWelcomeMessage()
 	g.askPlayersToPlaceShips()
+	
+	g.output.Show("Let's Play!")
+	g.takeShot(turns)
 }
