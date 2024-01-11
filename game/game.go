@@ -1,6 +1,7 @@
 package game
 
 import (
+	"battleships/grid"
 	"battleships/player"
 	"fmt"
 	"strconv"
@@ -68,11 +69,17 @@ func (g *Game) takeShot(turns *player.Turns) {
 	g.output.Show(prompt)
 
 	row, col := g.FetchShipPosition()
-	_, err := turns.GetActivePlayer().Fire(row, col)
+	shotResult, err := turns.GetActivePlayer().Fire(row, col)
 
 	if err != nil {
 		g.output.Show("invalid position, try again")
 		return 
+	}
+
+	if shotResult == grid.MISS {
+		g.output.Show("shot missed")
+	} else {
+		g.output.Show("HIT! Enemy ship sunk")
 	}
 }
 
@@ -85,5 +92,8 @@ func (g *Game) Play() {
 	g.askPlayersToPlaceShips()
 	
 	g.output.Show("Let's Play!")
-	g.takeShot(turns)
+
+	for !turns.IsGameWon() {
+		g.takeShot(turns)
+	}
 }

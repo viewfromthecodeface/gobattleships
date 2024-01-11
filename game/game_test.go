@@ -2,6 +2,7 @@ package game_test
 
 import (
 	"battleships/game"
+	"fmt"
 	"testing"
 )
 
@@ -14,6 +15,7 @@ type StubTextInput struct {
 func (t *StubTextInput) Fetch() string {
 	nextInput := t.inputs[t.current]
 	t.current++
+	fmt.Println(">", nextInput) // DEBUG
 	return nextInput 
 }
 
@@ -23,14 +25,6 @@ type MockTextOutput struct {
 
 func (o *MockTextOutput) Show(text string) {
 	o.textHistory = append(o.textHistory, text)
-}
-
-func (o *MockTextOutput) assertText(t *testing.T, want string) {
-	got := o.textHistory[0]
-
-	if got != want {
-		t.Errorf("Missing output text: got %v, want %v", got, want)
-	}
 }
 
 func (o *MockTextOutput) assertAllText(t *testing.T, allWanted []string) {
@@ -71,9 +65,16 @@ func TestPlayer1WinsRepresentativeGame(t *testing.T) {
 		"63", "00", // hit miss
 		"64", "00", // hit miss
 		"65", "00", // hit miss
+		"66", "00", // hit miss
 		"50", "00", // hit miss
 		"51", "00", // hit miss
 		"52", "00", // winning-hit miss
+		"99", "99", // should never read these, game won earlier
+		"99", "99", // should never read these, game won earlier
+		"99", "99", // should never read these, game won earlier
+		"99", "99", // should never read these, game won earlier
+		"99", "99", // should never read these, game won earlier
+		"99", "99", // should never read these, game won earlier
 	}
 
 	input := &StubTextInput{ inputs: allInputBothPlayers }
@@ -111,8 +112,56 @@ func TestPlayer1WinsRepresentativeGame(t *testing.T) {
 		"Player 2 Place Ship 9",
 		"",
 		"Let's Play!",
+
 		"Player 1 - enter position 00-66 of your shot",
 		"invalid position, try again",
+		"Player 1 - enter position 00-66 of your shot",
+		"shot missed",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
+		"Player 2 - enter position 00-66 of your shot",
+		"shot missed",
+
+		"Player 1 - enter position 00-66 of your shot",
+		"HIT! Enemy ship sunk",
 	}
 
 	output.assertAllText(t, want)
