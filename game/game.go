@@ -25,18 +25,14 @@ func NewGame(userInput TextInput, output TextOutput) *Game {
 	return &Game{input: userInput, output: output}
 }
 
-func toPosition(userCommand string) (row int, col int) {
+func (g *Game)FetchShipPosition() (row int, col int) {
+	userCommand := g.input.Fetch()
 	decimalValue, _ := strconv.Atoi(userCommand)
 
 	row = decimalValue / 10
 	col = decimalValue % 10
 
 	return row, col
-}
-
-func (g *Game)FetchShipPosition() (row int, col int) {
-	userCommand := g.input.Fetch()
-	return toPosition(userCommand)
 }
 
 func (g *Game) placeShips(currentPlayer *player.Player) {
@@ -71,8 +67,7 @@ func (g *Game) takeShot(turns *player.Turns) {
 
 	g.output.Show(prompt)
 
-	positionText := g.input.Fetch()
-	row, col := toPosition(positionText)
+	row, col := g.FetchShipPosition()
 	_, err := turns.GetActivePlayer().Fire(row, col)
 
 	if err != nil {
