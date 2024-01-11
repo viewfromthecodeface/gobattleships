@@ -96,4 +96,7 @@ func (g *Game) Play() {
 	for !turns.IsGameWon() {
 		g.takeShot(turns)
 	}
+
+	winner := fmt.Sprintf("%s WINS!", turns.GetWinner().GetName())
+	g.output.Show(winner)
 }

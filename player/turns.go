@@ -71,3 +71,7 @@ func (t *Turns) RecordWin() {
 func (t *Turns) GetActivePlayer() *Player {
 	return t.activePlayer
 }
+
+func (t *Turns) GetWinner() *Player {
+	return t.winner
+}

@@ -162,6 +162,8 @@ func TestPlayer1WinsRepresentativeGame(t *testing.T) {
 
 		"Player 1 - enter position 00-66 of your shot",
 		"HIT! Enemy ship sunk",
+
+		"Player 1 WINS!",
 	}
 
 	output.assertAllText(t, want)
