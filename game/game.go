@@ -29,7 +29,10 @@ type Game struct {
 }
 
 func NewGame(userInput TextInput, output TextOutput) *Game {
-	return &Game{input: userInput, output: output}
+	g := &Game{input: userInput, output: output}
+	g.player1 = player.NewPlayer("Player 1", MAXIMUM_NUMBER_OF_SHIPS)
+	g.player2 = player.NewPlayer("Player 2", MAXIMUM_NUMBER_OF_SHIPS)
+	return g
 }
 
 func (g *Game) show(text string) {
@@ -97,9 +100,6 @@ func (g *Game) fire() grid.ShotResult {
 }
 
 func (g *Game) Play() {
-	g.player1 = player.NewPlayer("Player 1", MAXIMUM_NUMBER_OF_SHIPS)
-	g.player2 = player.NewPlayer("Player 2", MAXIMUM_NUMBER_OF_SHIPS)
-
 	g.showWelcomeMessage()
 	g.askPlayersToPlaceShips()
 	
