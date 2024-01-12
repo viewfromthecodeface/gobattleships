@@ -15,15 +15,25 @@ type TextOutput interface {
 	Show(text string)
 }
 
+const MAXIMUM_NUMBER_OF_SHIPS = 9
+
 type Game struct {
 	input TextInput
 	output TextOutput
+
 	player1 *player.Player
 	player2 *player.Player
+
+	shooter *player.Player
+	opponent *player.Player
 }
 
 func NewGame(userInput TextInput, output TextOutput) *Game {
 	return &Game{input: userInput, output: output}
+}
+
+func (g *Game) show(text string) {
+	g.output.Show(text)
 }
 
 func (g *Game)FetchShipPosition() (row int, col int) {
@@ -37,12 +47,12 @@ func (g *Game)FetchShipPosition() (row int, col int) {
 }
 
 func (g *Game) placeShips(currentPlayer *player.Player) {
-	taskOverview := fmt.Sprintf("%s - Place each of your 9 ships", currentPlayer.GetName())
-	g.output.Show(taskOverview)
+	taskOverview := fmt.Sprintf("%s - Place each of your 9 ships", currentPlayer.Name)
+	g.show(taskOverview)
 
-	for ship := 1; ship <= player.MAXIMUM_NUMBER_OF_SHIPS; ship++ {
+	for ship := 1; ship <= MAXIMUM_NUMBER_OF_SHIPS; ship++ {
 
-		prompt := fmt.Sprintf("%s Place Ship %d", currentPlayer.GetName(), ship)
+		prompt := fmt.Sprintf("%s Place Ship %d", currentPlayer.Name, ship)
 		g.output.Show(prompt)
 
 		row, col := g.FetchShipPosition()
@@ -53,8 +63,8 @@ func (g *Game) placeShips(currentPlayer *player.Player) {
 }
 
 func (g *Game) showWelcomeMessage() {
-	g.output.Show( "Let's play Battleships!")
-	g.output.Show("")
+	g.show( "Let's play Battleships!")
+	g.show("")
 }
 
 func (g *Game) askPlayersToPlaceShips() {
@@ -62,41 +72,59 @@ func (g *Game) askPlayersToPlaceShips() {
 	g.placeShips(g.player2)
 }
 
-func (g *Game) takeShot(turns *player.Turns) {
-	prompt := fmt.Sprintf("%s - enter position 00-66 of your shot", 
-							turns.GetActivePlayer().GetName())
+func (g *Game) otherPlayerShoots() {
+	previousShooter := g.shooter
 
-	g.output.Show(prompt)
+	g.shooter = g.opponent
+	g.opponent = previousShooter
+}
 
-	row, col := g.FetchShipPosition()
-	shotResult, err := turns.GetActivePlayer().Fire(row, col)
+func (g *Game) fire() grid.ShotResult {
+	for {
+		prompt := fmt.Sprintf("%s - enter position 00-66 of your shot", 
+								g.shooter.Name)
+		g.show(prompt)
 
-	if err != nil {
-		g.output.Show("invalid position, try again")
-		return 
-	}
+		row, col := g.FetchShipPosition()
+		shotResult, err := g.opponent.IncomingShot(row, col)
 
-	if shotResult == grid.MISS {
-		g.output.Show("shot missed")
-	} else {
-		g.output.Show("HIT! Enemy ship sunk")
+		if err == nil {
+			return shotResult
+		} 
+			
+		g.show("invalid position, try again")
 	}
 }
 
 func (g *Game) Play() {
-	turns := player.NewTurns()
-	g.player1 = player.New(turns, "Player 1")
-	g.player2 = player.New(turns, "Player 2")
+	g.player1 = player.NewPlayer("Player 1", MAXIMUM_NUMBER_OF_SHIPS)
+	g.player2 = player.NewPlayer("Player 2", MAXIMUM_NUMBER_OF_SHIPS)
 
 	g.showWelcomeMessage()
 	g.askPlayersToPlaceShips()
 	
-	g.output.Show("Let's Play!")
+	g.show("Let's Play!")
 
-	for !turns.IsGameWon() {
-		g.takeShot(turns)
+	g.shooter = g.player1
+	g.opponent = g.player2
+
+	gameOver := false
+	for !gameOver {
+		shotResult := g.fire()
+		
+		if shotResult == grid.HIT {
+			g.show("HIT! Enemy ship sunk")
+
+			if g.opponent.AllShipsSunk() {
+				gameOver = true
+			} else {
+				g.otherPlayerShoots()
+			}
+		} else {
+			g.show("shot missed")
+			g.otherPlayerShoots()
+		}
 	}
 
-	winner := fmt.Sprintf("%s WINS!", turns.GetWinner().GetName())
-	g.output.Show(winner)
+	g.show(g.shooter.Name + " WINS!")
 }

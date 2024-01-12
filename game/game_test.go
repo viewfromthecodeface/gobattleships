@@ -2,7 +2,6 @@ package game_test
 
 import (
 	"battleships/game"
-	"fmt"
 	"testing"
 )
 
@@ -15,7 +14,6 @@ type StubTextInput struct {
 func (t *StubTextInput) Fetch() string {
 	nextInput := t.inputs[t.current]
 	t.current++
-	fmt.Println(">", nextInput) // DEBUG
 	return nextInput 
 }
 
@@ -68,7 +66,7 @@ func TestPlayer1WinsRepresentativeGame(t *testing.T) {
 		"66", "00", // hit miss
 		"50", "00", // hit miss
 		"51", "00", // hit miss
-		"52", "00", // winning-hit miss
+		"52",  // hit - player 1 wins 
 		"99", "99", // should never read these, game won earlier
 		"99", "99", // should never read these, game won earlier
 		"99", "99", // should never read these, game won earlier
