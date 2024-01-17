@@ -83,7 +83,7 @@ func TestReportsHitPlayer1 (t *testing.T) {
 	game := game.New()
 	game.Player2.PlaceShip(2, 3)
 
-	got := game.TakeShot(2, 3) // Player 1 hit
+	got, _ := game.TakeShot(2, 3) // Player 1 hit
 
 	want := grid.HIT
 	if got != want {
@@ -96,11 +96,25 @@ func TestReportsPlayerShotResult(t *testing.T) {
 	game := game.New()
 
 	// Act 
-	got := game.TakeShot(2, 3) // player 1 miss
+	got, _ := game.TakeShot(2, 3) // player 1 miss
 
 	// Assert
 	want := grid.MISS
 	if got != want {
 		t.Errorf("got %v, want %v:", got, want)
+	}
+}
+
+
+func TestReportsPlayerInvalidShot(t *testing.T) {
+	// Arrange 
+	game := game.New()
+
+	// Act 
+	_, got := game.TakeShot(-1, -1) // player 1 miss
+
+	// Assert
+	if got == nil {
+		t.Error("error not reported")
 	}
 }

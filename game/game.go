@@ -46,7 +46,7 @@ func (g *Game) nextTurn() {
 	g.opponent = newOpponent
 }
 
-func (g *Game) TakeShot(row int, col int) grid.ShotResult {
+func (g *Game) TakeShot(row int, col int) (grid.ShotResult, error) {
 	shotResult, err := g.opponent.IncomingShot(row, col)
 
 	isValidShot := err == nil
@@ -54,5 +54,5 @@ func (g *Game) TakeShot(row int, col int) grid.ShotResult {
 		g.nextTurn()
 	}
 
-	return shotResult
+	return shotResult, err
 }
