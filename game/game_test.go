@@ -96,7 +96,7 @@ func TestReportsPlayerShotResult(t *testing.T) {
 	game := game.New()
 
 	// Act 
-	got := game.TakeShot(-1, -1) // player 1 miss
+	got := game.TakeShot(2, 3) // player 1 miss
 
 	// Assert
 	want := grid.MISS
