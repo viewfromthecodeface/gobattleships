@@ -1,6 +1,7 @@
 package game
 
 import (
+	"battleships/grid"
 	"battleships/player"
 )
 
@@ -40,16 +41,18 @@ func (g *Game) CurrentPlayer() *player.Player {
 
 func (g *Game) nextTurn() {
 	newOpponent := g.shooter
-	
+
 	g.shooter = g.opponent
 	g.opponent = newOpponent
 }
 
-func (g *Game) TakeShot(row int, col int) {
-	_, err := g.opponent.IncomingShot(row, col)
+func (g *Game) TakeShot(row int, col int) grid.ShotResult {
+	shotResult, err := g.opponent.IncomingShot(row, col)
 
 	isValidShot := err == nil
 	if isValidShot {
 		g.nextTurn()
 	}
+
+	return shotResult
 }

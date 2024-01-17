@@ -2,6 +2,7 @@ package game_test
 
 import (
 	"battleships/game"
+	"battleships/grid"
 	"testing"
 )
 
@@ -78,3 +79,28 @@ func TestStaysWithPlayer2AfterInvalidShot(t *testing.T) {
 	}
 }
 
+func TestReportsHitPlayer1 (t *testing.T) {
+	game := game.New()
+	game.Player2.PlaceShip(2, 3)
+
+	got := game.TakeShot(2, 3) // Player 1 hit
+
+	want := grid.HIT
+	if got != want {
+		t.Errorf("got %v, want %v:", got, want)
+	}
+}
+
+func TestReportsPlayerShotResult(t *testing.T) {
+	// Arrange 
+	game := game.New()
+
+	// Act 
+	got := game.TakeShot(-1, -1) // player 1 miss
+
+	// Assert
+	want := grid.MISS
+	if got != want {
+		t.Errorf("got %v, want %v:", got, want)
+	}
+}
