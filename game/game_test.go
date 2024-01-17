@@ -46,3 +46,19 @@ func TestPlayer1FollowsPlayer2Shot(t *testing.T) {
 		t.Errorf("got %v, want %v:", got, want)
 	}
 }
+
+func TestStaysWithPlayer1AfterInvalidShot(t *testing.T) {
+	// Arrange 
+	game := game.New()
+	game.TakeShot(-1, -1) // invalid shot
+
+	// Act 
+	got := game.CurrentPlayer()
+
+	// Assert
+	want := game.Player1
+	if got != want {
+		t.Errorf("got %v, want %v:", got, want)
+	}
+}
+

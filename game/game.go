@@ -40,12 +40,16 @@ func (g *Game) CurrentPlayer() *player.Player {
 
 func (g *Game) nextTurn() {
 	newOpponent := g.shooter
-
+	
 	g.shooter = g.opponent
 	g.opponent = newOpponent
 }
 
 func (g *Game) TakeShot(row int, col int) {
-	g.opponent.IncomingShot(row, col)
-	g.nextTurn()
+	_, err := g.opponent.IncomingShot(row, col)
+
+	isValidShot := err == nil
+	if isValidShot {
+		g.nextTurn()
+	}
 }
