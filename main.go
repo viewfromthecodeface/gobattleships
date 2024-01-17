@@ -1,10 +1,5 @@
 package main
 
-import (
-	"battleships/console"
-	"battleships/game"
-)
-
 /*
 This game of battleships is very simple to start:
 There are 2 players
@@ -18,9 +13,5 @@ The player to first sink all their opponent's battleships is the winner
 */
 
 func main() {
-	input := console.NewKeyboardPlayerInput()
-	output := console.NewConsoleOutput()
-
-	game := game.NewGame(input, output)
-	game.Play()
+  // Not Implemented
 }
