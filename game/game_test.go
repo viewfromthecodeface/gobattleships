@@ -118,3 +118,21 @@ func TestReportsPlayerInvalidShot(t *testing.T) {
 		t.Error("error not reported")
 	}
 }
+
+func TestReportsPlayer2Wins(t *testing.T) {
+	// Arrange 
+	game := game.New()
+	game.Player1.PlaceShip(0, 0)
+	game.Player2.PlaceShip(6, 6)
+	game.TakeShot(1, 1) // player 1 miss
+	game.TakeShot(0, 0) // player 2 hit and win
+	
+	// Act 
+	got := game.Winner
+
+	// Assert
+	want := game.Player2
+	if got != want {
+		t.Errorf("got %v, want %v:", got, want)
+	}
+}

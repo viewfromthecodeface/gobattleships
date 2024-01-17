@@ -18,6 +18,7 @@ const MAXIMUM_NUMBER_OF_SHIPS = 9
 type Game struct {
 	Player1 *player.Player
 	Player2 *player.Player
+	Winner *player.Player
 
 	shooter *player.Player
 	opponent *player.Player
@@ -50,9 +51,16 @@ func (g *Game) TakeShot(row int, col int) (grid.ShotResult, error) {
 	shotResult, err := g.opponent.IncomingShot(row, col)
 
 	isValidShot := err == nil
-	if isValidShot {
-		g.nextTurn()
+	if !isValidShot {
+		return grid.MISS, err
 	}
 
+	if shotResult == grid.HIT {
+		if g.opponent.AllShipsSunk() {
+			g.Winner = g.shooter
+		}
+	}
+
+	g.nextTurn()
 	return shotResult, err
 }
