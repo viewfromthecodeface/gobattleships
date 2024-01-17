@@ -73,3 +73,13 @@ func TestReportsHit(t *testing.T) {
 		t.Error("did not report hit")
 	}
 }
+
+func TestReportsInvalidShot(t *testing.T) {
+	player := NewPlayer("One", 9)
+
+	_, err := player.IncomingShot(-1, -1)
+
+	if err == nil {
+		t.Error("missing error return")
+	}
+}
