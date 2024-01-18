@@ -3,13 +3,8 @@ package grid
 import "errors"
 
 type Grid struct {
-	positions [7][7]string
+	shipsPresent [49]bool // true if ship present
 }
-
-const (
-	emptySpace string = ""
-	shipToken string = "ship"
-)
 
 type ShotResult int
 const (
@@ -34,16 +29,20 @@ func (g *Grid) PlaceShip( row int, col int ) error {
 		return errors.New("ship already at location")
 	}
 
-	g.positions[row][col] = shipToken
+	g.shipsPresent[toIndex(row, col)] = true
 	return nil
 }
 
+func toIndex( row int, col int ) int {
+	return (row * 7) + col
+}
+
 func (g Grid) isShipAt( row int, col int ) bool {
-	return g.positions[row][col] == shipToken
+	return g.shipsPresent[toIndex(row, col)]
 }
 
 func (g *Grid) sinkShip( row int, col int ) {
-	g.positions[row][col] = emptySpace
+	g.shipsPresent[toIndex(row,col)] = false
 }
 
 func (g *Grid) IncomingShot( row int, col int ) (ShotResult, error) {
@@ -60,11 +59,9 @@ func (g *Grid) IncomingShot( row int, col int ) (ShotResult, error) {
 }
 
 func (g Grid) HasNoShips() bool {
-	for _, row := range g.positions {
-		for _, position := range row {
-			if position != emptySpace {
-				return false
-			}
+	for _, isShipPresent := range g.shipsPresent {
+		if isShipPresent {
+			return false
 		}
 	}
 
