@@ -46,19 +46,22 @@ func (g *Grid) addShip(row int, col int) {
 						    ship{row, col})
 }
 
-func (g Grid) isShipAt( row int, col int ) bool {
-	return slices.Contains(g.shipsPresent, ship{row, col})
-}
-
-func (g *Grid) sinkShip( row int, col int ) {
-	target := ship{row, col}
-
+func (g *Grid) removeShip(target ship) {
 	for i, ship := range g.shipsPresent {
 		if ship == target {
 			g.shipsPresent = append(g.shipsPresent[:i], g.shipsPresent[i+1:]...)
 			return
 		}
 	}
+}
+
+func (g Grid) isShipAt( row int, col int ) bool {
+	return slices.Contains(g.shipsPresent, ship{row, col})
+}
+
+func (g *Grid) sinkShip( row int, col int ) {
+	target := ship{row, col}
+	g.removeShip(target)
 }
 
 func (g *Grid) IncomingShot( row int, col int ) (ShotResult, error) {
