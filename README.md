@@ -17,3 +17,10 @@ If the player hits a battleship, then it is sunk, and the turn passes to the opp
 If the player misses a battleship then it is called a miss, and the turn passes to the opponent
 
 The player to first sink all their opponent's battleships is the winner
+
+## Test coverage commands
+
+```
+go test -coverpkg=./... -coverprofile c.out ./...
+go tool cover -html="c.out"
+```
