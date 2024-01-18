@@ -5,14 +5,6 @@ import (
 	"battleships/player"
 )
 
-type TextInput interface {
-	Fetch() string
-}
-
-type TextOutput interface {
-	Show(text string)
-}
-
 const MAXIMUM_NUMBER_OF_SHIPS = 9
 
 type Game struct {
