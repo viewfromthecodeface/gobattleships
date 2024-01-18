@@ -1,4 +1,4 @@
-# gobatttleships
+# gobattleships
 
 This game of battleships is very simple to start:
 
