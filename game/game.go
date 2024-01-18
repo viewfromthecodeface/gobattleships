@@ -33,10 +33,8 @@ func (g *Game) CurrentPlayer() *player.Player {
 }
 
 func (g *Game) nextTurn() {
-	newOpponent := g.shooter
-
-	g.shooter = g.opponent
-	g.opponent = newOpponent
+	// swap shooter <-> opponent
+	g.shooter, g.opponent = g.opponent, g.shooter
 }
 
 func (g *Game) TakeShot(row int, col int) (grid.ShotResult, error) {
