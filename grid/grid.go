@@ -1,9 +1,17 @@
 package grid
 
-import "errors"
+import (
+	"errors"
+	"slices"
+)
+
+type ship struct {
+	row int
+	col int
+}
 
 type Grid struct {
-	shipsPresent [49]bool // true if ship present
+	shipsPresent []ship
 }
 
 type ShotResult int
@@ -29,20 +37,28 @@ func (g *Grid) PlaceShip( row int, col int ) error {
 		return errors.New("ship already at location")
 	}
 
-	g.shipsPresent[toIndex(row, col)] = true
+	g.addShip(row, col)
 	return nil
 }
 
-func toIndex( row int, col int ) int {
-	return (row * 7) + col
+func (g *Grid) addShip(row int, col int) {
+	g.shipsPresent = append(g.shipsPresent, 
+						    ship{row, col})
 }
 
 func (g Grid) isShipAt( row int, col int ) bool {
-	return g.shipsPresent[toIndex(row, col)]
+	return slices.Contains(g.shipsPresent, ship{row, col})
 }
 
 func (g *Grid) sinkShip( row int, col int ) {
-	g.shipsPresent[toIndex(row,col)] = false
+	target := ship{row, col}
+
+	for i, ship := range g.shipsPresent {
+		if ship == target {
+			g.shipsPresent = append(g.shipsPresent[:i], g.shipsPresent[i+1:]...)
+			return
+		}
+	}
 }
 
 func (g *Grid) IncomingShot( row int, col int ) (ShotResult, error) {
@@ -59,11 +75,5 @@ func (g *Grid) IncomingShot( row int, col int ) (ShotResult, error) {
 }
 
 func (g Grid) HasNoShips() bool {
-	for _, isShipPresent := range g.shipsPresent {
-		if isShipPresent {
-			return false
-		}
-	}
-
-	return true
+	return len(g.shipsPresent) == 0
 }
